@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical"
+
+    tools:context="luke.Instapage.word.Fin" >
+
+    <ImageButton
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/lblue"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bottomtext" />
+
+    <ImageButton
+        android:id="@+id/mid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/lred"
+        android:scaleType="fitCenter"
+        android:src="@drawable/midtext"/>
+
+    <ImageButton
+        android:id="@+id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/d"
+        android:layout_weight="1"
+        android:background="@color/moon"
+        android:scaleType="fitCenter"
+        android:src="@drawable/toptext" />
+
+</LinearLayout><!-- From: file:/C:/Users/LUCASURE/Desktop/Project%20Files/InstaGator/InstaGator%20Source/app/src/main/res/layout/fin.xml -->

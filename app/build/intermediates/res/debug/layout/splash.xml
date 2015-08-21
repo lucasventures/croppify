@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fcffe4"
+    android:weightSum="6">
+
+    <ImageView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:src="@drawable/type"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_above="@+id/imageView"
+        android:layout_centerHorizontal="true">
+
+
+    </ImageView>
+
+    <ImageView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:src="@drawable/gator"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView">
+
+
+
+
+       />
+    </ImageView>
+
+</RelativeLayout><!-- From: file:/C:/Users/LUCASURE/Desktop/Project%20Files/InstaGator/InstaGator%20Source/app/src/main/res/layout/splash.xml -->

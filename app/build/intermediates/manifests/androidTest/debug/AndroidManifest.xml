@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="luke.Instapage.word.test">
+
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="22" />
+
+    <application>
+        <uses-library android:name="android.test.runner" />
+    </application>
+
+    <instrumentation android:name="android.test.InstrumentationTestRunner"
+                     android:targetPackage="luke.Instapage.word"
+                     android:handleProfiling="false"
+                     android:functionalTest="false"
+                     android:label="Tests for luke.Instapage.word"/>
+</manifest>

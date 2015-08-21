@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:weightSum="2">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/sand">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/type"
+        android:id="@+id/topGr"
+        android:layout_above="@+id/topG"
+        android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gator"
+            android:id="@+id/topG"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="15dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linrs"
+        android:layout_weight="1"
+        android:weightSum="3"
+       >
+
+        <ImageButton
+            android:id="@+id/takePhoto"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+android:layout_weight="1"
+            android:background="@color/lblue"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/instacamera33" />
+
+        <ImageButton
+            android:id="@+id/openGallery"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/lred"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/instagallery33" />
+
+        <ImageButton
+            android:id="@+id/extras"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/moon"
+            android:clickable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/extras" />
+
+
+    </LinearLayout>
+</LinearLayout>

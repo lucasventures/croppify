@@ -26,7 +26,7 @@
         android:screenOrientation="portrait" 
         android:theme="@style/bgn">
         <activity
-            android:name="luke.Instapage.word.Splash"
+            android:name="luke.Instapage.word.activities.SplashActivity"
             android:label="@string/title_splash" >\  <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -35,21 +35,21 @@
 
         </activity>
         <activity
-            android:name="luke.Instapage.word.ImageActivity"
+            android:name="luke.Instapage.word.activities.ImageActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
 
         </activity>
         <activity
-            android:name="luke.Instapage.word.ResultDisplay"
+            android:name="luke.Instapage.word.activities.ResultDisplayActivity"
             android:label="@string/title_activity_result_display" >
         </activity>
         <activity
-            android:name="luke.Instapage.word.Fin"
+            android:name="luke.Instapage.word.activities.FinishedActivity"
             android:label="@string/title_activity_fin" >
         </activity>
         <activity
-            android:name="luke.Instapage.word.InfoActivity"
+            android:name="luke.Instapage.word.activities.InfoActivity"
             android:label="@string/title_activity_info" >
         </activity>
 

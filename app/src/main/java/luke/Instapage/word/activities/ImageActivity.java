@@ -1,6 +1,5 @@
-package luke.Instapage.word;
+package luke.Instapage.word.activities;
 
-import luke.Instapage.word.R;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -10,6 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import luke.Instapage.word.CropHelper;
+import luke.Instapage.word.CropParams;
+import luke.Instapage.word.R;
 
 
 public class ImageActivity extends BasePhotoCropActivity implements View.OnClickListener {
@@ -22,7 +25,7 @@ public class ImageActivity extends BasePhotoCropActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
 
@@ -35,33 +38,26 @@ public class ImageActivity extends BasePhotoCropActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.takePhoto:
-            
-            	
-            	Intent intent = CropHelper.buildCaptureIntent(mCropParams.uri);
+                Intent intent = CropHelper.buildCaptureIntent(mCropParams.uri);
                 startActivityForResult(intent, CropHelper.REQUEST_CAMERA);
-                
                 break;
+
             case R.id.openGallery:
-            	
-            
-            	startActivityForResult(CropHelper.buildCropFromGalleryIntent(mCropParams), CropHelper.REQUEST_CROP);
-              
+                startActivityForResult(CropHelper.buildCropFromGalleryIntent(mCropParams), CropHelper.REQUEST_CROP);
                 break;
 
             case R.id.extras:
-            	String merp = null;
-            	Intent intent3 = new Intent(ImageActivity.this, ResultDisplay.class);
-        		intent3.putExtra("extra", merp);
-        		startActivity(intent3);
-        		
-            	Intent intent2 = new Intent(this, Fin.class);
-                this.startActivity (intent2);
-                this.finishActivity (0);
+                String merp = null;
+                Intent intent3 = new Intent(ImageActivity.this, ResultDisplayActivity.class);
+                intent3.putExtra("extra", merp);
+                startActivity(intent3);
 
-
-            	
-            break;
+                Intent intent2 = new Intent(this, FinishedActivity.class);
+                this.startActivity(intent2);
+                this.finishActivity(0);
+                break;
         }
     }
 
@@ -72,25 +68,22 @@ public class ImageActivity extends BasePhotoCropActivity implements View.OnClick
 
     @Override
     public void onPhotoCropped(Uri uri) {
-    	
+
         Log.d(TAG, "Crop Uri in path: " + uri.getPath());
         Toast.makeText(this, "Use this photo?", Toast.LENGTH_LONG).show();
-        
-		MediaScannerConnection.scanFile(this, new String[] { uri.getPath() }, new String[] { "image/png" }, null);
+
+        MediaScannerConnection.scanFile(this, new String[]{uri.getPath()}, new String[]{"image/png"}, null);
         // send uri to next activity woot woot 
         uriData();
-       
-	
     }
 
     private void uriData() {
-    	Intent intent2 = new Intent(ImageActivity.this, ResultDisplay.class);
-		intent2.putExtra("imageUri", mCropParams.uri);
-		startActivity(intent2);
-		
-	}
+        Intent intent2 = new Intent(ImageActivity.this, ResultDisplayActivity.class);
+        intent2.putExtra("imageUri", mCropParams.uri);
+        startActivity(intent2);
+    }
 
-	@Override
+    @Override
     public void onCropCancel() {
         Toast.makeText(this, "Crop canceled!", Toast.LENGTH_LONG).show();
     }

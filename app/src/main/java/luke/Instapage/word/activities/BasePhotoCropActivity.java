@@ -1,8 +1,12 @@
-package luke.Instapage.word;
+package luke.Instapage.word.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+
+import luke.Instapage.word.CropHandler;
+import luke.Instapage.word.CropHelper;
+import luke.Instapage.word.CropParams;
 
 
 public class BasePhotoCropActivity extends Activity implements CropHandler {

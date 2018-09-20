@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bottom"
     android:orientation="vertical"
-    tools:context="luke.Instapage.word.InfoActivity" >
+    tools:context="luke.Instapage.word.activities.InfoActivity">
 
     <ScrollView
         android:id="@+id/scrollView1"

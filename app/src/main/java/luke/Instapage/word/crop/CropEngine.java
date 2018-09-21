@@ -62,7 +62,6 @@ public class CropEngine {
             }
 
             int loopVal = 0;
-            int postVal = 9;
 
             while (loopVal < 9) {
                 Bitmap image = chunkedImages.get(loopVal);
@@ -72,7 +71,6 @@ public class CropEngine {
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
-                postVal--;
                 loopVal++;
             }
         } catch (FileNotFoundException e) {

@@ -2,13 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId "luke.Instapage.word"
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.compileSdkVersion
+
     }
 
     buildTypes {
@@ -20,7 +21,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation project(':cropper')
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
     implementation 'com.karumi:dexter:5.0.0'
 }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/InstaGator Source.iml" filepath="$PROJECT_DIR$/InstaGator Source.iml" />
+      <module fileurl="file://$PROJECT_DIR$/InstaGator.iml" filepath="$PROJECT_DIR$/InstaGator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

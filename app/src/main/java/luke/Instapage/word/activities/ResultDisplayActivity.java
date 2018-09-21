@@ -17,6 +17,7 @@ import luke.Instapage.word.R;
 
 public class ResultDisplayActivity extends Activity implements OnClickListener {
 
+    String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,46 +27,41 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
 
         ImageButton keep = findViewById(R.id.Continue);
         ImageButton back = findViewById(R.id.goback);
-        Uri imUri = getIntent().getParcelableExtra("imageUri");
+        path = getIntent().getExtras().getString("imageUri");
         ImageView mImageView = findViewById(R.id.cropDisplay);
-        mImageView.setImageBitmap(CropHelper.decodeUriAsBitmap(this, imUri));
+        if (path != null) {
+            mImageView.setImageBitmap(CropHelper.decodeUriAsBitmap(this, Uri.parse(path)));
+        } else {
+            Intent intent = new Intent(this, ImageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();
+        }
 
         keep.setOnClickListener(this);
         back.setOnClickListener(this);
-
-
-        // sends parcelable to
     }
-
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.goback:
 
-                startActivity(new Intent(ResultDisplayActivity.this,
-                        ImageActivity.class));
-
+                Intent intent = new Intent(this, ImageActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
                 break;
+
             case R.id.Continue:
 
-
-                // this needs to be executed from a separate thread
-
-
-                Uri imUri = getIntent().getParcelableExtra("imageUri");
-                Intent intent2 = new Intent(ResultDisplayActivity.this, FinishedActivity.class);
-                intent2.putExtra("imageUri", imUri);
-
-                // Thread myRunnableThread = new Thread(new ImageProcessingThread());
-                // myRunnableThread.start();
-
-
-                startActivity(intent2);
-                Toast.makeText(this, "Performing Operations...", Toast.LENGTH_SHORT).show();
-                // pull up progress dialog that receives updates from thread
-
+                if (path == null) {
+                    Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent2 = new Intent(ResultDisplayActivity.this, FinishedActivity.class);
+                    intent2.putExtra("imageUri", path);
+                    startActivity(intent2);
+                }
 
                 break;
         }

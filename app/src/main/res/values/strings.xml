@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">InstaGator</string>
-    <string name="title_fin">InstaGator</string>
-    <string name="title_splash">InstaGator</string>
-    <string name="title_activity_result_display">InstaGator</string>
-    <string name="splashy">InstaGator</string>
-    <string name="title_activity_super_page">InstaGator</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_splash2">InstaGator</string>
-    <string name="title_activity_nocrop">Nocrop</string>
-    <string name="title_activity_fin">InstaGator</string>
-    <string name="title_activity_info">InstaGator</string>
-    <string name="title_activity_fragment_main">InstaGator</string>
-
-   
+    <string name="app_name">InstaPage</string>
 </resources>

@@ -35,7 +35,7 @@ public class SplashActivity extends Activity {
                 } catch (Exception e) {
 
                 } finally {
-                    Intent intent = new Intent(SplashActivity.this, ImageActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }

@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static luke.Instapage.word.activities.ImageActivity.TAG;
+import static luke.Instapage.word.activities.MainActivity.TAG;
 
 public class CropEngine {
 

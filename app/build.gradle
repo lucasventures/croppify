@@ -21,5 +21,6 @@ android {
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
+    implementation 'com.karumi:dexter:5.0.0'
 }

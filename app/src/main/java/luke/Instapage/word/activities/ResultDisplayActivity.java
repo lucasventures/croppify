@@ -32,7 +32,7 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
         if (path != null) {
             mImageView.setImageBitmap(CropHelper.decodeUriAsBitmap(this, Uri.parse(path)));
         } else {
-            Intent intent = new Intent(this, ImageActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();
@@ -47,7 +47,7 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
         switch (v.getId()) {
             case R.id.goback:
 
-                Intent intent = new Intent(this, ImageActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
 

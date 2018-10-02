@@ -23,5 +23,6 @@ android {
 dependencies {
     implementation project(':cropper')
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+//    implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'com.karumi:dexter:5.0.0'
 }

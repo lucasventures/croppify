@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.File;
@@ -42,6 +43,7 @@ public class CropImageActivity extends AppCompatActivity
         implements CropImageView.OnSetImageUriCompleteListener,
         CropImageView.OnCropImageCompleteListener {
 
+    private static final String CROP_TYPE = "type";
     /**
      * The crop image view library widget used in the activity
      */
@@ -62,6 +64,34 @@ public class CropImageActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crop_image_activity);
+
+        findViewById(R.id.threexone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCropImageView.setAspectRatio(3, 1);
+                mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_ONE);
+                getIntent().putExtra(CROP_TYPE, 2);
+            }
+        });
+
+        findViewById(R.id.threextwo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCropImageView.setAspectRatio(3, 2);
+                mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_TWO);
+                getIntent().putExtra(CROP_TYPE, 2);
+            }
+        });
+
+        findViewById(R.id.threexthree).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCropImageView.setAspectRatio(3, 3);
+                mCropImageView.setGuidelines(CropImageView.Guidelines.ON);
+                mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_THREE);
+                getIntent().putExtra(CROP_TYPE, 3);
+            }
+        });
 
         mCropImageView = findViewById(R.id.cropImageView);
 

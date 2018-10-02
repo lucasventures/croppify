@@ -2000,7 +2000,14 @@ public class CropImageView extends FrameLayout {
         /**
          * Always show
          */
-        ON
+        ON,
+
+        /**
+         * For specific guideline appearances
+         */
+        THREE_BY_ONE,
+        THREE_BY_TWO,
+        THREE_BY_THREE
     }
     // endregion
 

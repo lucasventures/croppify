@@ -184,6 +184,16 @@ public class CropOverlayView extends View {
      * Used to set back LayerType after changing to software.
      */
     private Integer mOriginalLayerType;
+
+    /**
+     * Determines vertically drawn guidelines for crop overlay
+     */
+    private int verticalGuidelines;
+
+    /**
+     * Determines horizontally drawn guidelines for crop overlay
+     */
+    private int horizontalGuidelines;
     // endregion
 
     public CropOverlayView(Context context) {
@@ -666,7 +676,15 @@ public class CropOverlayView extends View {
 
         if (mCropWindowHandler.showGuidelines()) {
             // Determines whether guidelines should be drawn or not
-            if (mGuidelines == CropImageView.Guidelines.ON) {
+            if (mGuidelines == CropImageView.Guidelines.ON ||
+                    mGuidelines == CropImageView.Guidelines.THREE_BY_THREE) {
+                setThreeXThree();
+                drawGuidelines(canvas);
+            } else if (mGuidelines == CropImageView.Guidelines.THREE_BY_ONE) {
+                setThreeXOne();
+                drawGuidelines(canvas);
+            } else if (mGuidelines == CropImageView.Guidelines.THREE_BY_TWO) {
+                setThreeXTwo();
                 drawGuidelines(canvas);
             } else if (mGuidelines == CropImageView.Guidelines.ON_TOUCH && mMoveHandler != null) {
                 // Draw only when resizing
@@ -738,6 +756,7 @@ public class CropOverlayView extends View {
 
             float oneThirdCropWidth = rect.width() / 3;
             float oneThirdCropHeight = rect.height() / 3;
+            float halfHeight = rect.height() / 2;
 
             if (mCropShape == CropImageView.CropShape.OVAL) {
 
@@ -751,12 +770,15 @@ public class CropOverlayView extends View {
                 canvas.drawLine(x1, rect.top + h - yv, x1, rect.bottom - h + yv, mGuidelinePaint);
                 canvas.drawLine(x2, rect.top + h - yv, x2, rect.bottom - h + yv, mGuidelinePaint);
 
-                // Draw horizontal guidelines.
-                float y1 = rect.top + oneThirdCropHeight;
-                float y2 = rect.bottom - oneThirdCropHeight;
-                float xv = (float) (w * Math.cos(Math.asin((h - oneThirdCropHeight) / h)));
-                canvas.drawLine(rect.left + w - xv, y1, rect.right - w + xv, y1, mGuidelinePaint);
-                canvas.drawLine(rect.left + w - xv, y2, rect.right - w + xv, y2, mGuidelinePaint);
+                if (horizontalGuidelines != 0) {
+                    // Draw horizontal guidelines.
+                    float y1 = rect.top + oneThirdCropHeight;
+                    float y2 = rect.bottom - oneThirdCropHeight;
+                    float xv = (float) (w * Math.cos(Math.asin((h - oneThirdCropHeight) / h)));
+                    canvas.drawLine(rect.left + w - xv, y1, rect.right - w + xv, y1, mGuidelinePaint);
+                    canvas.drawLine(rect.left + w - xv, y2, rect.right - w + xv, y2, mGuidelinePaint);
+                }
+
             } else {
 
                 // Draw vertical guidelines.
@@ -765,11 +787,20 @@ public class CropOverlayView extends View {
                 canvas.drawLine(x1, rect.top, x1, rect.bottom, mGuidelinePaint);
                 canvas.drawLine(x2, rect.top, x2, rect.bottom, mGuidelinePaint);
 
-                // Draw horizontal guidelines.
-                float y1 = rect.top + oneThirdCropHeight;
-                float y2 = rect.bottom - oneThirdCropHeight;
-                canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
-                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+                if (horizontalGuidelines == 0) {
+                    //NONE!
+                } else if (horizontalGuidelines == 1) {
+                    //draw line in the middle
+                    float y2 = rect.top + halfHeight;
+                    canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+
+                } else if (horizontalGuidelines == 2) {
+                    //draw three lines
+                    float y1 = rect.top + oneThirdCropHeight;
+                    float y2 = rect.bottom - oneThirdCropHeight;
+                    canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
+                    canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+                }
             }
         }
     }
@@ -1133,6 +1164,24 @@ public class CropOverlayView extends View {
 
             return true;
         }
+    }
+
+    /**
+     * setters for vertical and horizontal guideline crop overlay
+     */
+    private void setThreeXOne() {
+        verticalGuidelines = 2;
+        horizontalGuidelines = 0;
+    }
+
+    private void setThreeXTwo() {
+        verticalGuidelines = 2;
+        horizontalGuidelines = 1;
+    }
+
+    private void setThreeXThree() {
+        verticalGuidelines = 2;
+        horizontalGuidelines = 2;
     }
     // endregion
 }

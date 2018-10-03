@@ -23,15 +23,20 @@ import static luke.Instapage.word.activities.MainActivity.TAG;
 
 public class CropEngine {
 
+    private static ArrayList<Bitmap> croppedImages = new ArrayList<>();
+
+    public static ArrayList<Bitmap> getCachedImages() {
+        return croppedImages;
+    }
+
     /**
      * @param context
      * @param imageUri
-     * @param type     ---- this is an integer declaring the number of "levels" to a column. Only may be 1, 2, or 3.
+     * @param type     ---- this is an integer declaring the number of "levels" to a column. Currently may be 1, 2, or 3.
      */
-    public static ArrayList<String> createCroppedImagesWithParams(WeakReference<Context> context, String imageUri, int type) {
-
-
-        ArrayList<String> stringifiedPaths = new ArrayList<>();
+    public static boolean createCroppedImagesWithParams(WeakReference<Context> context, String imageUri, int type) {
+        //reset the cache
+        croppedImages.clear();
 
         InputStream image_stream;
         try {
@@ -39,16 +44,8 @@ public class CropEngine {
 
             Bitmap bitmap = BitmapFactory.decodeStream(image_stream);
 
-            //TODO: this whole algorithm needs to be revised
-
-            int chunkNumbers = 3 * type;
             int rows, cols;
-            //For height and width of the small image chunks
             int chunkHeight, chunkWidth;
-            //To store all the small image chunks in bitmap format in this list
-            ArrayList<Bitmap> chunkedImages = new ArrayList<Bitmap>(chunkNumbers);
-            //Getting the scaled bitmap of the source image
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
 
             rows = type;
             cols = 3;
@@ -60,31 +57,19 @@ public class CropEngine {
             for (int x = 0; x < rows; x++) {
                 int xCoord = 0;
                 for (int y = 0; y < cols; y++) {
-                    chunkedImages.add(Bitmap.createBitmap(scaledBitmap, xCoord, yCoord, chunkWidth, chunkHeight));
+                    croppedImages.add(Bitmap.createBitmap(bitmap, xCoord, yCoord, chunkWidth, chunkHeight));
                     xCoord += chunkWidth;
                 }
                 yCoord += chunkHeight;
             }
-
-            int loopVal = 0;
-
-            while (loopVal < chunkNumbers) {
-                Bitmap image = chunkedImages.get(loopVal);
-                try {
-                    stringifiedPaths.add(saveImageToDisk(context, image, loopVal));
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
-                loopVal++;
-            }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return false;
         }
-        return stringifiedPaths;
+        return true;
     }
 
 
-    private static String saveImageToDisk(WeakReference<Context> context, Bitmap bitmapImage, int numericIdentifier) {
+    public static String saveImageToDisk(WeakReference<Context> context, Bitmap bitmapImage, int numericIdentifier) {
 
         String instaCut = Environment.getExternalStorageDirectory() + "/insta_cut_pro";
         File dir = new File(instaCut);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -14,7 +15,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 
 import luke.Instapage.word.R;
 import luke.Instapage.word.crop.CropEngine;
@@ -67,16 +67,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-
-                        final ArrayList<String> paths = CropEngine
+                        final boolean successful = CropEngine
                                 .createCroppedImagesWithParams(contextWeakReference, result.getUri().toString(), cropType);
-
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                final Intent intent = new Intent(MainActivity.this, ResultDisplayActivity.class);
-                                intent.putStringArrayListExtra("paths", paths);
-                                startActivity(intent);
+                                if (successful) {
+                                    final Intent intent = new Intent(MainActivity.this, ResultDisplayActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "An error has occurred.", Toast.LENGTH_LONG).show();
+                                }
                                 dialog.dismiss();
                             }
                         });
@@ -84,7 +85,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }).start();
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
+                Log.e(TAG, "onActivityResult: CROPPING ERROR");
+                Toast.makeText(MainActivity.this, "An error has occurred.", Toast.LENGTH_LONG).show();
             }
         } else {
             Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();

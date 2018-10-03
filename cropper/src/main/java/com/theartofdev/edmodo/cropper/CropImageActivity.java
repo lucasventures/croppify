@@ -70,7 +70,7 @@ public class CropImageActivity extends AppCompatActivity
             public void onClick(View v) {
                 mCropImageView.setAspectRatio(3, 1);
                 mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_ONE);
-                getIntent().putExtra(CROP_TYPE, 2);
+                getIntent().putExtra(CROP_TYPE, 1);
             }
         });
 

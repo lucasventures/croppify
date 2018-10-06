@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -21,45 +24,85 @@ import luke.Instapage.word.crop.CropEngine;
 
 public class ResultDisplayActivity extends Activity implements OnClickListener {
 
+    private ImageView one, two, three, four, five, six, seven, eight, nine;
+    private ArrayList<ImageView> imageViews;
+
+    private int postNumber;
+    private boolean triggeredByInstagramIntent = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_display);
 
-        ImageView one = findViewById(R.id.oneone);
-        ImageView two = findViewById(R.id.onetwo);
-        ImageView three = findViewById(R.id.onethree);
+        one = findViewById(R.id.oneone);
+        two = findViewById(R.id.onetwo);
+        three = findViewById(R.id.onethree);
 
-        ImageView four = findViewById(R.id.twoone);
-        ImageView five = findViewById(R.id.twotwo);
-        ImageView six = findViewById(R.id.twothree);
+        four = findViewById(R.id.twoone);
+        five = findViewById(R.id.twotwo);
+        six = findViewById(R.id.twothree);
 
-        ImageView seven = findViewById(R.id.threeone);
-        ImageView eight = findViewById(R.id.threetwo);
-        ImageView nine = findViewById(R.id.threethree);
+        seven = findViewById(R.id.threeone);
+        eight = findViewById(R.id.threetwo);
+        nine = findViewById(R.id.threethree);
 
-        ImageView[] imageViews = {
-                one, two, three, four, five, six, seven, eight, nine
-        };
+        postNumber = 0;
 
+        imageViews = new ArrayList<>();
+        imageViews.add(one);
+        imageViews.add(two);
+        imageViews.add(three);
+        imageViews.add(four);
+        imageViews.add(five);
+        imageViews.add(six);
+        imageViews.add(seven);
+        imageViews.add(eight);
+        imageViews.add(nine);
         setImages(imageViews);
 
-        findViewById(R.id.button4).setOnClickListener(this);
+        findViewById(R.id.save).setOnClickListener(this);
+        findViewById(R.id.post).setOnClickListener(this);
     }
 
-    private void setImages(ImageView[] imageViews) {
+    private void setImages(ArrayList<ImageView> imageViews) {
         ArrayList<Bitmap> images = CropEngine.getCachedImages();
         for (int i = 0; i < images.size(); i++) {
-            imageViews[i].setImageBitmap(images.get(i));
+            imageViews.get(i).setImageBitmap(images.get(i));
         }
+        postNumber = images.size() - 1;
     }
 
     @Override
     public void onClick(View v) {
-        createInstagramIntent(type, CropEngine.getCachedImages().get(0));
+        if (postNumber >= 0) {
+            createInstagramIntent(type, CropEngine.getCachedImages().get(postNumber));
+        } else {
+            //create dialog for rating app as well as finally giving an option to save.
+        }
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //increment number for post
+        if (triggeredByInstagramIntent) {
+            if (postNumber >= 0) {
+                imageViews.get(postNumber).setColorFilter(ContextCompat.getColor(this, R.color.lblue), PorterDuff.Mode.OVERLAY);
+                postNumber--;
+                triggeredByInstagramIntent = false;
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //when the application is interrupted, save the values of the current page in case there is an issue? not this release, but the next :)
+//        if()
+    }
 
     String type = "image/*";
 
@@ -70,19 +113,19 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
 
         // Set the MIME type
         share.setType(type);
-        String path = CropEngine.saveImageToDisk(new WeakReference<Context>(this), bmp, 0);
+        String path = CropEngine.saveImageToDisk(new WeakReference<Context>(this), bmp, postNumber);
 
         // Create the URI from the media
-        File media = new File(path);
-        Uri uri = Uri.fromFile(media);
+        Uri photoURI = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".luke.instapage.word", new File(path));
 
         // Add the URI to the Intent.
-        share.putExtra(Intent.EXTRA_STREAM, uri);
+        share.putExtra(Intent.EXTRA_STREAM, photoURI);
+        share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
+        triggeredByInstagramIntent = true;
         // Broadcast the Intent.
         startActivity(Intent.createChooser(share, "Share to"));
     }
-// create a content provider for instagram package name 
 }
 	
 

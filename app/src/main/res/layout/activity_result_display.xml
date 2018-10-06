@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:background="@drawable/button_bgn"
         android:padding="40dp"
         android:layout_alignParentTop="true"
         android:columnCount="3"
@@ -100,11 +101,12 @@
         android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:gravity="center"
+        android:background="@drawable/button_bgn"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/button4"
+            android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -114,7 +116,7 @@
             android:adjustViewBounds="true" />
 
         <ImageButton
-            android:id="@+id/button3"
+            android:id="@+id/post"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"

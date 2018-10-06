@@ -9,13 +9,31 @@ android {
         applicationId "luke.Instapage.word"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.compileSdkVersion
-
     }
+
+    signingConfigs {
+        release {
+            storeFile file("RELEASE_KEYSTORE.keystore")
+            storePassword 'mypassword'
+            keyAlias 'myalias'
+            keyPassword 'mypassword'
+        }
+    }
+
 
     buildTypes {
         release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }

@@ -1,6 +1,8 @@
 <resources>
-    <color name="lblue">#5bedc7</color>
+    <color name="green">#5bedc7</color>
+    <color name="lblue">#0049b0</color>
     <color name="lred">#ef5656</color>
     <color name="sand">#fff8b7</color>
+    <color name="dark_blue">#000679</color>
     <color name="moon">#383838</color>
 </resources>

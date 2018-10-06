@@ -27,11 +27,11 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-
         findViewById(R.id.openGallery).setOnClickListener(this);
+        //remove cache just in case
+        CropEngine.getCachedImages().clear();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             final CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            final int cropType = data.getIntExtra("type", 0);
+            final int cropType = data.getIntExtra("type", 1);
             if (resultCode == RESULT_OK && cropType != 0) {
 
                 final Handler handler = new Handler();

@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:background="#fdfdfd"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="16dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +20,7 @@
             android:layout_above="@+id/topG"
             android:layout_centerHorizontal="true"
             android:lineSpacingExtra="8sp"
-            android:text="InstaCut Pro"
+            android:text="9Crop Pro"
             android:textSize="36sp"
             android:typeface="normal" />
 
@@ -30,7 +32,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="15dp"
-            android:src="@drawable/gator" />
+            android:src="@drawable/cut_icon" />
 
 
     </RelativeLayout>
@@ -66,7 +68,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_users" />
+                android:src="@drawable/ig" />
 
             <ImageButton
                 android:layout_width="0dp"
@@ -82,7 +84,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_below="@id/buttons"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:paddingTop="16dp">
@@ -93,7 +94,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="share"
+                android:text="Social"
                 android:textSize="16sp" />
 
             <TextView
@@ -102,7 +103,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="rate in Google Play :)"
+                android:text="Rate"
                 android:textSize="16sp" />
 
         </LinearLayout>

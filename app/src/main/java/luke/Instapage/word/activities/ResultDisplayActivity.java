@@ -7,14 +7,14 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
@@ -48,7 +48,7 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
         eight = findViewById(R.id.threetwo);
         nine = findViewById(R.id.threethree);
 
-        postNumber = 0;
+        postNumber = CropEngine.getCachedImages().size();
 
         imageViews = new ArrayList<>();
         imageViews.add(one);
@@ -60,6 +60,7 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
         imageViews.add(seven);
         imageViews.add(eight);
         imageViews.add(nine);
+
         setImages(imageViews);
 
         findViewById(R.id.save).setOnClickListener(this);
@@ -76,11 +77,16 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (postNumber >= 0) {
-            createInstagramIntent(type, CropEngine.getCachedImages().get(postNumber));
-        } else {
-            //create dialog for rating app as well as finally giving an option to save.
+        if (v.getId() == R.id.post) {
+            if (postNumber >= 0) {
+                createInstagramIntent(CropEngine.getCachedImages().get(postNumber));
+            } else {
+                //create dialog for rating app as well as finally giving an option to save.
+            }
+        } else if (v.getId() == R.id.save) {
+            CropEngine.saveAllImages(new WeakReference<Context>(this));
         }
+
     }
 
 
@@ -100,31 +106,32 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
     @Override
     protected void onPause() {
         super.onPause();
-        //when the application is interrupted, save the values of the current page in case there is an issue? not this release, but the next :)
-//        if()
+        //when the application is interrupted, save the values of the current page in case there is an issue? not this release, but the next :]
     }
 
     String type = "image/*";
 
-    private void createInstagramIntent(String type, Bitmap bmp) {
+    private void createInstagramIntent(Bitmap bmp) {
 
-        // Create the new Intent using the 'Send' action.
-        Intent share = new Intent(Intent.ACTION_SEND);
-
-        // Set the MIME type
-        share.setType(type);
-        String path = CropEngine.saveImageToDisk(new WeakReference<Context>(this), bmp, postNumber);
-
-        // Create the URI from the media
-        Uri photoURI = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".luke.instapage.word", new File(path));
-
-        // Add the URI to the Intent.
-        share.putExtra(Intent.EXTRA_STREAM, photoURI);
-        share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
+        String path = CropEngine.saveImageToDisk(new WeakReference<Context>(this), bmp, postNumber, false);
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setPackage("com.instagram.android");
+        try {
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(), path, "", "")));
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        shareIntent.setType("image/jpeg");
         triggeredByInstagramIntent = true;
-        // Broadcast the Intent.
-        startActivity(Intent.createChooser(share, "Share to"));
+        startActivity(shareIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        CropEngine.getCachedImages().clear();
+        super.onBackPressed();
     }
 }
 	

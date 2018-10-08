@@ -1,129 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffff"
-    android:padding="12dp">
+    android:layout_margin="12dp"
+    android:background="@drawable/basic_rounded_bgn"
+    android:orientation="vertical">
 
-    <GridLayout
+    <LinearLayout
         android:id="@+id/nine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/button_bgn"
-        android:padding="40dp"
-        android:layout_alignParentTop="true"
-        android:columnCount="3"
-        android:rowCount="3">
+        android:orientation="vertical"
+        android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/oneone"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:adjustViewBounds="true"
-            android:layout_rowWeight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/onetwo"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
+            <ImageView
+                android:id="@+id/oneone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:layout_weight="1"
+                android:adjustViewBounds="true" />
 
-        <ImageView
-            android:id="@+id/onethree"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
+            <ImageView
+                android:id="@+id/onetwo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
 
-        <ImageView
-            android:id="@+id/twoone"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
+                android:adjustViewBounds="true" />
 
-        <ImageView
-            android:id="@+id/twotwo"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
+            <ImageView
+                android:id="@+id/onethree"
+                android:layout_width="0dp"
+                android:scaleType="fitCenter"
 
-        <ImageView
-            android:id="@+id/twothree"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true" />
+        </LinearLayout>
 
-        <ImageView
-            android:id="@+id/threeone"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="6dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/threetwo"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
+            <ImageView
+                android:id="@+id/twoone"
+                android:layout_width="0dp"
+                android:scaleType="fitCenter"
 
-        <ImageView
-            android:id="@+id/threethree"
-            android:layout_width="0dp"
-            android:layout_columnWeight="1"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_rowWeight="1"
-            android:adjustViewBounds="true" />
-    </GridLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true" />
+
+            <ImageView
+                android:id="@+id/twotwo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true" />
+
+            <ImageView
+                android:id="@+id/twothree"
+                android:layout_width="0dp"
+                android:layout_marginStart="6dp"
+                android:scaleType="fitCenter"
+
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/threeone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+
+                android:adjustViewBounds="true" />
+
+            <ImageView
+                android:id="@+id/threetwo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+
+                android:adjustViewBounds="true" />
+
+            <ImageView
+                android:id="@+id/threethree"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:scaleType="fitCenter"
+
+                android:layout_weight="1"
+                android:adjustViewBounds="true" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@null"
+        android:padding="16dp"
+        android:layout_weight="1"
+        android:background="#ffffff" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:background="@drawable/button_bgn"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_save"
-            android:gravity="center"
-            android:padding="12dp"
-            android:adjustViewBounds="true" />
+        <LinearLayout
+            android:id="@+id/buttons"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/post"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="12dp"
-            android:src="@drawable/ic_rate"
-            android:adjustViewBounds="true"
-            android:gravity="center" />
+            <ImageButton
+                android:id="@+id/save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:gravity="center"
+                android:src="@drawable/ic_save" />
+
+            <ImageButton
+                android:id="@+id/post"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:padding="12dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ig" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal"
+            android:paddingTop="16dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Save to Device"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Post to Instagram"
+                android:textSize="16sp" />
+
+        </LinearLayout>
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

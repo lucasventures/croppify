@@ -96,7 +96,7 @@ public class CropImageActivity extends AppCompatActivity
         mCropImageView = findViewById(R.id.cropImageView);
 
         mCropImageView.setAspectRatio(3, 3);
-        mCropImageView.setGuidelines(CropImageView.Guidelines.ON);
+        getIntent().putExtra(CROP_TYPE, 3);
         mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_THREE);
 
         Bundle bundle = getIntent().getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE);

@@ -37,7 +37,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.openGallery:
                 CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.THREE_BY_THREE)
@@ -51,7 +50,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             final CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-            final int cropType = data.getIntExtra("type", 1);
+            if (data == null) {
+                //cancelled out of crop process
+                return;
+            }
+
+            final int cropType = data.getIntExtra("type", 0);
             if (resultCode == RESULT_OK && cropType != 0) {
 
                 final Handler handler = new Handler();
@@ -87,6 +91,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Log.e(TAG, "onActivityResult: CROPPING ERROR");
                 Toast.makeText(MainActivity.this, "An error has occurred.", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "An error has occurred. value type 0", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();

@@ -69,7 +69,7 @@ public class CropEngine {
     }
 
 
-    public static String saveImageToDisk(WeakReference<Context> context, Bitmap bitmapImage, int numericIdentifier) {
+    public static String saveImageToDisk(WeakReference<Context> context, Bitmap bitmapImage, int numericIdentifier, boolean broadcast) {
 
         String instaCut = Environment.getExternalStorageDirectory() + "/insta_cut_pro";
         File dir = new File(instaCut);
@@ -86,7 +86,9 @@ public class CropEngine {
             Log.e(TAG, "saveImageToDisk: FAILURE");
         }
 
-        notifyMediaStoreScanner(context.get(), file);
+        if (broadcast) {
+            notifyMediaStoreScanner(context.get(), file);
+        }
 
         return file.getAbsolutePath();
     }
@@ -102,4 +104,19 @@ public class CropEngine {
         }
     }
 
+    public static boolean saveAllImages(WeakReference<Context> contextWeakReference) {
+        boolean successful = false;
+
+        if (croppedImages != null && croppedImages.size() != 0) {
+            int i = 0;
+            for (Bitmap bmp :
+                    croppedImages) {
+                saveImageToDisk(contextWeakReference, bmp, i, true);
+                i++;
+                successful = true;
+            }
+        }
+
+        return successful;
+    }
 }

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "88296331350",
+    "firebase_url": "https://crop-pro.firebaseio.com",
+    "project_id": "crop-pro",
+    "storage_bucket": "crop-pro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:88296331350:android:096eb8d7794741e9",
+        "android_client_info": {
+          "package_name": "lucas.ventures.ninecrop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "88296331350-kve2lto4ervihk44cv2m3vb6tcgg7bp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lucas.ventures.ninecrop",
+            "certificate_hash": "71c8c7f2efba3b427056c162dbf45ccfea5378d4"
+          }
+        },
+        {
+          "client_id": "88296331350-58nn63g5aakbotqb1oj6racu7c862sgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR0snitBzu0Ld9TOd57tp8UvoXlE39OAo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "88296331350-58nn63g5aakbotqb1oj6racu7c862sgg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

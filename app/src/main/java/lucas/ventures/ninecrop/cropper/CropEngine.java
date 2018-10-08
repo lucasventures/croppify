@@ -1,4 +1,4 @@
-package luke.Instapage.word.crop;
+package lucas.ventures.ninecrop.cropper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static luke.Instapage.word.activities.MainActivity.TAG;
+import static lucas.ventures.ninecrop.activities.MainActivity.TAG;
 
 public class CropEngine {
 

@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">9Crop Pro</string>
+
+    <string name="admob_app_id">ca-app-pub-9693278822721633~2347134696</string>
+
+    <string name="admob_ad_unit_id">ca-app-pub-9693278822721633/7108506786</string>
+
+    <string name="admob_test">ca-app-pub-3940256099942544/6300978111</string>
+
+    <string name="crop_image_activity_title" />
+
+    <string name="crop_image_menu_rotate_left">Rotate counter clockwise</string>
+
+    <string name="crop_image_menu_rotate_right">Rotate</string>
+
+    <string name="crop_image_menu_crop">Crop</string>
+
+    <string name="crop_image_menu_flip">Flip</string>
+
+    <string name="crop_image_menu_flip_horizontally">Flip horizontally</string>
+
+    <string name="crop_image_menu_flip_vertically">Flip vertically</string>
+
+    <string name="pick_image_intent_chooser_title">Select source</string>
+
+    <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
 </resources>

@@ -6,7 +6,7 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "luke.Instapage.word"
+        applicationId "lucas.ventures.ninecrop"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.compileSdkVersion
     }
@@ -39,8 +39,11 @@ android {
 }
 
 dependencies {
-    implementation project(':cropper')
     implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
-//    implementation "com.airbnb.android:lottie:$lottieVersion"
-    implementation 'com.karumi:dexter:5.0.0'
+    implementation "com.android.support:exifinterface:$supportLibraryVersion"
+    implementation 'com.google.firebase:firebase-ads:11.8.0'
 }
+apply plugin: 'com.google.gms.google-services'
+
+
+

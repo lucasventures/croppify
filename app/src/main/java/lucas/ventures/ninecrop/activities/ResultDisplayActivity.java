@@ -1,8 +1,9 @@
-package luke.Instapage.word.activities;
+package lucas.ventures.ninecrop.activities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.net.Uri;
@@ -13,13 +14,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import luke.Instapage.word.R;
-import luke.Instapage.word.crop.CropEngine;
+import lucas.ventures.ninecrop.R;
+import lucas.ventures.ninecrop.cropper.CropEngine;
 
 
 public class ResultDisplayActivity extends Activity implements OnClickListener {
@@ -78,15 +80,32 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.post) {
-            if (postNumber >= 0) {
-                createInstagramIntent(CropEngine.getCachedImages().get(postNumber));
+            PackageManager pm = getPackageManager();
+            boolean isInstalled = isPackageInstalled("com.instagram.android", pm);
+            if (isInstalled) {
+                if (postNumber >= 0) {
+                    createInstagramIntent(CropEngine.getCachedImages().get(postNumber));
+                } else {
+                    //create dialog for rating app as well as finally giving an option to save.
+
+                    //new CompletionDialog().show();
+                }
             } else {
-                //create dialog for rating app as well as finally giving an option to save.
+                Toast.makeText(this, "Please install Instagram before proceeding.", Toast.LENGTH_SHORT).show();
             }
+
         } else if (v.getId() == R.id.save) {
             CropEngine.saveAllImages(new WeakReference<Context>(this));
         }
+    }
 
+    private boolean isPackageInstalled(String packagename, PackageManager packageManager) {
+        try {
+            packageManager.getPackageInfo(packagename, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
 

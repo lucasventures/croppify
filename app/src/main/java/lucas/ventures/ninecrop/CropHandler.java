@@ -1,4 +1,4 @@
-package luke.Instapage.word;
+package lucas.ventures.ninecrop;
 
 import android.app.Activity;
 import android.net.Uri;

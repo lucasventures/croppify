@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static lucas.ventures.ninecrop.activities.MainActivity.TAG;
 
 public class CropEngine {
 
@@ -83,7 +82,7 @@ public class CropEngine {
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
         } catch (IOException c) {
-            Log.e(TAG, "saveImageToDisk: FAILURE");
+            Log.e("Crop Engine", "saveImageToDisk: FAILURE");
         }
 
         if (broadcast) {

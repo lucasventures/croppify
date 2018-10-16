@@ -1,20 +1,23 @@
 package lucas.ventures.ninecrop.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -27,23 +30,30 @@ import lucas.ventures.ninecrop.cropper.CropEngine;
 import lucas.ventures.ninecrop.cropper.CropImage;
 import lucas.ventures.ninecrop.cropper.CropImageView;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MainActivity extends Activity implements View.OnClickListener {
-
-    public static final String TAG = "CropEngine";
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.gray));
-        setContentView(R.layout.main);
-        findViewById(R.id.openGallery).setOnClickListener(this);
+        setContentView(R.layout.content_main_activity);
+
+        ImageView gradientView = findViewById(R.id.gradient);
+        Animation logoMoveAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
+        gradientView.startAnimation(logoMoveAnimation);
+
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-        //remove cache just in case
+
+        findViewById(R.id.openGallery).setOnClickListener(this);
         CropEngine.getCachedImages().clear();
+
+        TextView logoText = findViewById(R.id.text_logo);
+        Typeface face = Typeface.createFromAsset(getAssets(),
+                "LeagueGothic.otf");
+        logoText.setTypeface(face);
     }
 
     @Override
@@ -56,35 +66,51 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             .start(this);
                 }
                 break;
-            case R.id.rate:
-                Uri uri = Uri.parse("market://details?id=" + getPackageName());
-                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-
-                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                try {
-                    startActivity(goToMarket);
-                } catch (ActivityNotFoundException e) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
-                }
-                break;
-
-            case R.id.connect:
-                Uri link = Uri.parse("http://instagram.com/_u/9croppro");
-                Intent likeIng = new Intent(Intent.ACTION_VIEW, link);
-                likeIng.setPackage("com.instagram.android");
-
-                try {
-                    startActivity(likeIng);
-                } catch (ActivityNotFoundException e) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://instagram.com/9croppro")));
-                }
-                break;
+//            case R.id.rate:
+//                Uri uri = Uri.parse("market://details?id=" + getPackageName());
+//                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+//
+//                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+//                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+//                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//                try {
+//                    startActivity(goToMarket);
+//                } catch (ActivityNotFoundException e) {
+//                    startActivity(new Intent(Intent.ACTION_VIEW,
+//                            Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+//                }
+//                break;
+//
+//            case R.id.connect:
+//                Uri link = Uri.parse("http://instagram.com/_u/9croppro");
+//                Intent likeIng = new Intent(Intent.ACTION_VIEW, link);
+//                likeIng.setPackage("com.instagram.android");
+//
+//                try {
+//                    startActivity(likeIng);
+//                } catch (ActivityNotFoundException e) {
+//                    startActivity(new Intent(Intent.ACTION_VIEW,
+//                            Uri.parse("http://instagram.com/9croppro")));
+//                }
+//                break;
 
         }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public boolean isStoragePermissionGranted() {
@@ -169,5 +195,4 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

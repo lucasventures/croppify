@@ -198,7 +198,7 @@ public final class CropImage {
             allIntents.remove(allIntents.size() - 1);
         }
 
-        // Create a chooser from the main  intent
+        // Create a chooser from the activity_main  intent
         Intent chooserIntent = Intent.createChooser(target, title);
 
         // Add all other intents
@@ -209,7 +209,7 @@ public final class CropImage {
     }
 
     /**
-     * Get the main Camera intent for capturing image using device camera app. If the outputFileUri is
+     * Get the activity_main Camera intent for capturing image using device camera app. If the outputFileUri is
      * null, a default Uri will be created with {@link #getCaptureImageOutputUri(Context)}, so then
      * you will be able to get the pictureUri using {@link #getPickImageResultUri(Context, Intent)}.
      * Otherwise, it is just you use the Uri passed to this method.
@@ -993,13 +993,13 @@ public final class CropImage {
         protected ActivityResult(Parcel in) {
             super(
                     null,
-                    (Uri) in.readParcelable(Uri.class.getClassLoader()),
+                    in.readParcelable(Uri.class.getClassLoader()),
                     null,
-                    (Uri) in.readParcelable(Uri.class.getClassLoader()),
+                    in.readParcelable(Uri.class.getClassLoader()),
                     (Exception) in.readSerializable(),
                     in.createFloatArray(),
-                    (Rect) in.readParcelable(Rect.class.getClassLoader()),
-                    (Rect) in.readParcelable(Rect.class.getClassLoader()),
+                    in.readParcelable(Rect.class.getClassLoader()),
+                    in.readParcelable(Rect.class.getClassLoader()),
                     in.readInt(),
                     in.readInt());
         }

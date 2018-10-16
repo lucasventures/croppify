@@ -1,6 +1,5 @@
 package lucas.ventures.ninecrop.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,11 +9,15 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
@@ -24,7 +27,7 @@ import lucas.ventures.ninecrop.R;
 import lucas.ventures.ninecrop.cropper.CropEngine;
 
 
-public class ResultDisplayActivity extends Activity implements OnClickListener {
+public class ResultDisplayActivity extends AppCompatActivity implements OnClickListener {
 
     private ImageView one, two, three, four, five, six, seven, eight, nine;
     private ArrayList<ImageView> imageViews;
@@ -37,6 +40,10 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_display);
+
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         one = findViewById(R.id.oneone);
         two = findViewById(R.id.onetwo);
@@ -115,7 +122,7 @@ public class ResultDisplayActivity extends Activity implements OnClickListener {
         //increment number for post
         if (triggeredByInstagramIntent) {
             if (postNumber >= 0) {
-                imageViews.get(postNumber).setColorFilter(ContextCompat.getColor(this, R.color.lblue), PorterDuff.Mode.OVERLAY);
+                imageViews.get(postNumber).setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary), PorterDuff.Mode.OVERLAY);
                 postNumber--;
                 triggeredByInstagramIntent = false;
             }

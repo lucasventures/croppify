@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="green">#5bedc7</color>
-    <color name="lblue">#0049b0</color>
-    <color name="lred">#ef5656</color>
-    <color name="sand">#fff8b7</color>
-    <color name="dark_blue">#000679</color>
-    <color name="moon">#383838</color>
-    <color name="off_white">#eeeeee</color>
+    <color name="colorPrimary">#1de9b6</color>
+    <color name="colorPrimary_gradient_val">#277dc2</color>
+    <color name="colorPrimaryLight">#BBDEFB</color>
+    <color name="colorPrimaryDark">#059e78</color>
+    <color name="colorAccent">#03A9F4</color>
+    <color name="divider">#BDBDBD</color>
+
+    <color name="off_white">#e7e7e7</color>
 </resources>

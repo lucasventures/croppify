@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/app_theme"
+    tools:context=".activities.MainActivity">
+
+    <ImageView
+        android:id="@+id/gradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:adjustViewBounds="true"
+        android:elevation="6dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/text_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:text="9CROP"
+        android:textColor="#ffffff"
+        android:textSize="42sp" />
+
+
+    <ImageView
+        android:id="@+id/action_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_menu_share" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/text_logo"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="#6fffffff" />
+
+
+    <ImageView
+        android:id="@+id/ig"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/lay"
+        android:layout_toStartOf="@+id/rate"
+        android:background="@drawable/ig_gradient"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:src="@drawable/ig_white" />
+
+    <ImageView
+        android:id="@+id/rate"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_above="@+id/lay"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/smile_gradient"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:src="@drawable/smile" />
+
+    <LinearLayout
+        android:id="@+id/lay"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_above="@+id/adView"
+        android:layout_margin="16dp"
+        android:background="@drawable/circle_grad_bgn"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+
+        <ImageButton
+            android:id="@+id/openGallery"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_margin="12dp"
+            android:background="@null"
+            android:padding="16dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_gallery" />
+    </LinearLayout>
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/admob_test" />
+
+</RelativeLayout>

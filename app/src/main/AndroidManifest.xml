@@ -9,33 +9,23 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:allowBackup="false"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:screenOrientation="portrait">
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="@string/admob_app_id" />
 
         <activity
-            android:name="lucas.ventures.ninecrop.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-
+            android:name=".cropper.CropImageActivity"
+            android:theme="@style/crop_theme" />
         <activity
-            android:name="lucas.ventures.ninecrop.activities.MainActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name="lucas.ventures.ninecrop.activities.ResultDisplayActivity" />
+            android:name=".activities.ResultDisplayActivity"
+            android:theme="@style/crop_theme" />
 
         <provider
-            android:name="lucas.ventures.ninecrop.GenericFileProvider"
+            android:name=".GenericFileProvider"
             android:authorities="${applicationId}.lucas.instapage.word.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -44,6 +34,16 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/title_activity_main2_activityf"
+            android:theme="@style/app_theme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

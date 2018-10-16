@@ -66,7 +66,7 @@ final class CropWindowMoveHandler {
     /**
      * the secondary edge associated with this handle; may be null
      *
-     * @param cropWindowHandler main crop window handle to get and update the crop window edges
+     * @param cropWindowHandler activity_main crop window handle to get and update the crop window edges
      * @param touchX            the location of the initial toch possition to measure move distance
      * @param touchY            the location of the initial toch possition to measure move distance
      */

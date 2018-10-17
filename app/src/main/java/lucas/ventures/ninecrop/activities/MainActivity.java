@@ -2,17 +2,18 @@ package lucas.ventures.ninecrop.activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -48,12 +49,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdView.loadAd(adRequest);
 
         findViewById(R.id.openGallery).setOnClickListener(this);
+        findViewById(R.id.rate).setOnClickListener(this);
+        findViewById(R.id.share).setOnClickListener(this);
+        findViewById(R.id.ig).setOnClickListener(this);
+        findViewById(R.id.promo).setOnClickListener(this);
+
         CropEngine.getCachedImages().clear();
 
         TextView logoText = findViewById(R.id.text_logo);
         Typeface face = Typeface.createFromAsset(getAssets(),
                 "LeagueGothic.otf");
         logoText.setTypeface(face);
+        TextView promo = findViewById(R.id.promo);
+        promo.setTypeface(face);
     }
 
     @Override
@@ -66,52 +74,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             .start(this);
                 }
                 break;
-//            case R.id.rate:
-//                Uri uri = Uri.parse("market://details?id=" + getPackageName());
-//                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-//
-//                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-//                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-//                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-//                try {
-//                    startActivity(goToMarket);
-//                } catch (ActivityNotFoundException e) {
-//                    startActivity(new Intent(Intent.ACTION_VIEW,
-//                            Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
-//                }
-//                break;
-//
-//            case R.id.connect:
-//                Uri link = Uri.parse("http://instagram.com/_u/9croppro");
-//                Intent likeIng = new Intent(Intent.ACTION_VIEW, link);
-//                likeIng.setPackage("com.instagram.android");
-//
-//                try {
-//                    startActivity(likeIng);
-//                } catch (ActivityNotFoundException e) {
-//                    startActivity(new Intent(Intent.ACTION_VIEW,
-//                            Uri.parse("http://instagram.com/9croppro")));
-//                }
-//                break;
+            case R.id.rate:
+                Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+                }
+                break;
+
+            case R.id.promo:
+                goToInstaProfile();
+                break;
+
+            case R.id.ig:
+                goToInstaProfile();
+                break;
+
+            case R.id.share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,
+                        "Make a cool collage on Instagram with this app! https://play.google.com/store/apps/details?id=" + getPackageName());
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                break;
 
         }
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void goToInstaProfile() {
+        Uri link = Uri.parse("http://instagram.com/_u/lucasventures");
+        Intent likeIng = new Intent(Intent.ACTION_VIEW, link);
+        likeIng.setPackage("com.instagram.android");
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        try {
+            startActivity(likeIng);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://instagram.com/9croppro")));
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
 
     public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {

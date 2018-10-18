@@ -1,14 +1,19 @@
 package lucas.ventures.ninecrop.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,12 +39,15 @@ public class ResultDisplayActivity extends AppCompatActivity implements OnClickL
 
     private int postNumber;
     private boolean triggeredByInstagramIntent = false;
+    private boolean rated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_display);
+
+        rated = hasRated();
 
         AdView mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -90,13 +98,48 @@ public class ResultDisplayActivity extends AppCompatActivity implements OnClickL
             PackageManager pm = getPackageManager();
             boolean isInstalled = isPackageInstalled("com.instagram.android", pm);
             if (isInstalled) {
-                if (postNumber >= 0) {
-                    createInstagramIntent(CropEngine.getCachedImages().get(postNumber));
-                } else {
-                    //create dialog for rating app as well as finally giving an option to save.
+                if (postNumber == 1 && !rated) {
+                    //This is the last post!
+                    new AlertDialog.Builder(this)
+                            .setIcon(R.mipmap.ic_launcher)
+                            .setMessage("Hope you are enjoying 9Crop! Please take a moment to rate the application, it'd really mean a lot to hear your feedback. Thanks, and best wishes! -@LucasVentures")
+                            .setPositiveButton("Rate :)", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //take off to rate, preserve place in post order
+                                    rated = true;
+                                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ResultDisplayActivity.this);
+                                    preferences.edit().putBoolean("hasRated", true).apply();
+                                    dialog.dismiss();
+                                    Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
 
-                    //new CompletionDialog().show();
+                                    goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                            Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                                            Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                                    try {
+                                        startActivity(goToMarket);
+                                    } catch (ActivityNotFoundException e) {
+                                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                                Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+                                    }
+                                }
+                            })
+                            .setNegativeButton("No thanks", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    createInstagramIntent(CropEngine.getCachedImages().get(postNumber));
+                                }
+                            })
+                            .create()
+                            .show();
+                } else {
+                    if (postNumber >= 0) {
+                        createInstagramIntent(CropEngine.getCachedImages().get(postNumber));
+                    }
                 }
+
             } else {
                 Toast.makeText(this, "Please install Instagram before proceeding.", Toast.LENGTH_SHORT).show();
             }
@@ -104,6 +147,12 @@ public class ResultDisplayActivity extends AppCompatActivity implements OnClickL
         } else if (v.getId() == R.id.save) {
             CropEngine.saveAllImages(new WeakReference<Context>(this));
         }
+
+    }
+
+    private boolean hasRated() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getBoolean("hasRated", false);
     }
 
     private boolean isPackageInstalled(String packagename, PackageManager packageManager) {

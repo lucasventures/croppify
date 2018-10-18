@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -23,8 +22,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -67,7 +68,7 @@ public class CropImageActivity extends AppCompatActivity
     private Button okayButton;
     private int cWidth = 0;
     private int cHeight = 0;
-
+    private AlertDialog dialog;
 
     //TODO: text input layouts, then edit texts, then textwatchers for entry handling
 
@@ -102,7 +103,6 @@ public class CropImageActivity extends AppCompatActivity
                 mCropImageView.setAspectRatio(3, 2);
                 mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_TWO);
                 mCropImageView.prepareCustomGuidelines(3, 2);
-
                 getIntent().putExtra(CROP_HEIGHT, 2);
                 getIntent().putExtra(CROP_WIDTH, 3);
             }
@@ -127,7 +127,7 @@ public class CropImageActivity extends AppCompatActivity
             }
         });
 
-        dialogView = getLayoutInflater().inflate(R.layout.custom_entry, null);
+        dialogView = getLayoutInflater().inflate(R.layout.custom_entry, (RelativeLayout) findViewById(R.id.parent), false);
         layInputWidth = dialogView.findViewById(R.id.widthLay);
         layInputHeight = dialogView.findViewById(R.id.heightLay);
         editTextHeight = dialogView.findViewById(R.id.height);
@@ -143,6 +143,7 @@ public class CropImageActivity extends AppCompatActivity
                 mCropImageView.prepareCustomGuidelines(cWidth, cHeight);
                 getIntent().putExtra(CROP_HEIGHT, cHeight);
                 getIntent().putExtra(CROP_WIDTH, cWidth);
+                dialog.dismiss();
             }
         });
         okayButton.setEnabled(false);
@@ -193,7 +194,10 @@ public class CropImageActivity extends AppCompatActivity
     }
 
     private void openCustomDialog() {
-        final AlertDialog dialog = new AlertDialog.Builder(this)
+        if (dialogView.getParent() != null) {
+            ((ViewGroup)dialogView.getParent()).removeView(dialogView);
+        }
+        dialog = new AlertDialog.Builder(this)
                 .setView(dialogView)
                 .setCancelable(true)
                 .create();
@@ -473,6 +477,11 @@ public class CropImageActivity extends AppCompatActivity
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
             //TODO: til.setError("You need to enter a name");
             if (s != null && s.length() > 0) {
                 int widthValue = Integer.decode(s.toString());
@@ -488,11 +497,6 @@ public class CropImageActivity extends AppCompatActivity
                 }
             }
         }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
     };
 
     private TextWatcher heightWatcher = new TextWatcher() {
@@ -503,6 +507,11 @@ public class CropImageActivity extends AppCompatActivity
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
             //TODO: til.setError("You need to enter a name");
             if (s != null && s.length() > 0) {
                 int heightValue = Integer.decode(s.toString());
@@ -517,11 +526,6 @@ public class CropImageActivity extends AppCompatActivity
                     }
                 }
             }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
         }
     };
 

@@ -3,6 +3,8 @@ package lucas.ventures.ninecrop.cropper;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,13 +13,18 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -36,7 +43,8 @@ public class CropImageActivity extends AppCompatActivity
         implements CropImageView.OnSetImageUriCompleteListener,
         CropImageView.OnCropImageCompleteListener {
 
-    private static final String CROP_TYPE = "type";
+    private static final String CROP_HEIGHT = "height";
+    private static final String CROP_WIDTH = "width";
     /**
      * The crop image view library widget used in the activity
      */
@@ -51,6 +59,21 @@ public class CropImageActivity extends AppCompatActivity
      * the options that were set for the crop image
      */
     private CropImageOptions mOptions;
+    private View dialogView;
+    private TextInputLayout layInputWidth;
+    private TextInputLayout layInputHeight;
+    private EditText editTextWidth;
+    private EditText editTextHeight;
+    private Button okayButton;
+    private int cWidth = 0;
+    private int cHeight = 0;
+
+
+    //TODO: text input layouts, then edit texts, then textwatchers for entry handling
+
+    //TODO: then ending prompt upon post completion
+    //TODO: then handle layout issues for custom selections 2x1, 1x3, 3x4, 3x5 etc
+    //TODO: then add post start upon touching of any photo (only initially, though)
 
     @Override
     @SuppressLint("NewApi")
@@ -67,7 +90,9 @@ public class CropImageActivity extends AppCompatActivity
             public void onClick(View v) {
                 mCropImageView.setAspectRatio(3, 1);
                 mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_ONE);
-                getIntent().putExtra(CROP_TYPE, 1);
+                mCropImageView.prepareCustomGuidelines(3, 1);
+                getIntent().putExtra(CROP_HEIGHT, 1);
+                getIntent().putExtra(CROP_WIDTH, 3);
             }
         });
 
@@ -76,7 +101,10 @@ public class CropImageActivity extends AppCompatActivity
             public void onClick(View v) {
                 mCropImageView.setAspectRatio(3, 2);
                 mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_TWO);
-                getIntent().putExtra(CROP_TYPE, 2);
+                mCropImageView.prepareCustomGuidelines(3, 2);
+
+                getIntent().putExtra(CROP_HEIGHT, 2);
+                getIntent().putExtra(CROP_WIDTH, 3);
             }
         });
 
@@ -86,14 +114,46 @@ public class CropImageActivity extends AppCompatActivity
                 mCropImageView.setAspectRatio(3, 3);
                 mCropImageView.setGuidelines(CropImageView.Guidelines.ON);
                 mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_THREE);
-                getIntent().putExtra(CROP_TYPE, 3);
+                mCropImageView.prepareCustomGuidelines(3, 3);
+                getIntent().putExtra(CROP_HEIGHT, 3);
+                getIntent().putExtra(CROP_WIDTH, 3);
             }
         });
+
+        findViewById(R.id.custom).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCustomDialog();
+            }
+        });
+
+        dialogView = getLayoutInflater().inflate(R.layout.custom_entry, null);
+        layInputWidth = dialogView.findViewById(R.id.widthLay);
+        layInputHeight = dialogView.findViewById(R.id.heightLay);
+        editTextHeight = dialogView.findViewById(R.id.height);
+        editTextWidth = dialogView.findViewById(R.id.width);
+
+        okayButton = dialogView.findViewById(R.id.donebtn);
+        okayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCropImageView.setAspectRatio(cWidth, cHeight);
+                mCropImageView.setGuidelines(CropImageView.Guidelines.ON);
+                mCropImageView.setGuidelines(CropImageView.Guidelines.CUSTOM);
+                mCropImageView.prepareCustomGuidelines(cWidth, cHeight);
+                getIntent().putExtra(CROP_HEIGHT, cHeight);
+                getIntent().putExtra(CROP_WIDTH, cWidth);
+            }
+        });
+        okayButton.setEnabled(false);
+
+        editTextWidth.addTextChangedListener(widthWatcher);
+        editTextHeight.addTextChangedListener(heightWatcher);
 
         mCropImageView = findViewById(R.id.cropImageView);
 
         mCropImageView.setAspectRatio(3, 3);
-        getIntent().putExtra(CROP_TYPE, 3);
+        getIntent().putExtra(CROP_HEIGHT, 3);
         mCropImageView.setGuidelines(CropImageView.Guidelines.THREE_BY_THREE);
 
         Bundle bundle = getIntent().getBundleExtra(CropImage.CROP_IMAGE_EXTRA_BUNDLE);
@@ -131,6 +191,15 @@ public class CropImageActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+
+    private void openCustomDialog() {
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(dialogView)
+                .setCancelable(true)
+                .create();
+        dialog.show();
+    }
+
 
     @Override
     protected void onStart() {
@@ -395,5 +464,65 @@ public class CropImageActivity extends AppCompatActivity
             }
         }
     }
-    // endregion
+
+    private TextWatcher widthWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //TODO: til.setError("You need to enter a name");
+            if (s != null && s.length() > 0) {
+                int widthValue = Integer.decode(s.toString());
+                if (widthValue > 3 || widthValue == 0) {
+                    okayButton.setEnabled(false);
+                    layInputWidth.setError("Enter a width value between 1 and 3.");
+                } else {
+                    cWidth = widthValue;
+                    layInputWidth.setError(null);
+                    if (cHeight > 0 && cHeight <= 6) {
+                        okayButton.setEnabled(true);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    private TextWatcher heightWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //TODO: til.setError("You need to enter a name");
+            if (s != null && s.length() > 0) {
+                int heightValue = Integer.decode(s.toString());
+                if (heightValue > 6 || heightValue == 0) {
+                    layInputHeight.setError("Enter a height value between 1 and 6.");
+                    okayButton.setEnabled(false);
+                } else {
+                    cHeight = heightValue;
+                    layInputWidth.setError(null);
+                    if (cWidth > 0 && cWidth <= 3) {
+                        okayButton.setEnabled(true);
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
 }

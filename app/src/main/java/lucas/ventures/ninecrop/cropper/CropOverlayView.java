@@ -194,6 +194,8 @@ public class CropOverlayView extends View {
      * Determines horizontally drawn guidelines for crop overlay
      */
     private int horizontalGuidelines;
+    private int cWidth;
+    private int cHeight;
     // endregion
 
     public CropOverlayView(Context context) {
@@ -686,6 +688,9 @@ public class CropOverlayView extends View {
             } else if (mGuidelines == CropImageView.Guidelines.THREE_BY_TWO) {
                 setThreeXTwo();
                 drawGuidelines(canvas);
+            } else if (mGuidelines == CropImageView.Guidelines.CUSTOM) {
+                prepareForCustomGuidelines();
+                drawGuidelines(canvas);
             } else if (mGuidelines == CropImageView.Guidelines.ON_TOUCH && mMoveHandler != null) {
                 // Draw only when resizing
                 drawGuidelines(canvas);
@@ -696,6 +701,7 @@ public class CropOverlayView extends View {
 
         drawCorners(canvas);
     }
+
 
     /**
      * Draw shadow background over the image not including the crop area.
@@ -754,56 +760,77 @@ public class CropOverlayView extends View {
             RectF rect = mCropWindowHandler.getRect();
             rect.inset(sw, sw);
 
-            float oneThirdCropWidth = rect.width() / 3;
-            float oneThirdCropHeight = rect.height() / 3;
-            float halfHeight = rect.height() / 2;
 
-            if (mCropShape == CropImageView.CropShape.OVAL) {
 
-                float w = rect.width() / 2 - sw;
-                float h = rect.height() / 2 - sw;
+            if (verticalGuidelines == 0) {
+                //NONE!
+            } else if (verticalGuidelines == 1) {
+                float halfWidth = rect.width() / 2;
+                float x1 = rect.left + halfWidth;
+                canvas.drawLine(x1, rect.top, x1, rect.bottom, mGuidelinePaint);
+            } else if (verticalGuidelines == 2) {
 
-                // Draw vertical guidelines.
-                float x1 = rect.left + oneThirdCropWidth;
-                float x2 = rect.right - oneThirdCropWidth;
-                float yv = (float) (h * Math.sin(Math.acos((w - oneThirdCropWidth) / w)));
-                canvas.drawLine(x1, rect.top + h - yv, x1, rect.bottom - h + yv, mGuidelinePaint);
-                canvas.drawLine(x2, rect.top + h - yv, x2, rect.bottom - h + yv, mGuidelinePaint);
-
-                if (horizontalGuidelines != 0) {
-                    // Draw horizontal guidelines.
-                    float y1 = rect.top + oneThirdCropHeight;
-                    float y2 = rect.bottom - oneThirdCropHeight;
-                    float xv = (float) (w * Math.cos(Math.asin((h - oneThirdCropHeight) / h)));
-                    canvas.drawLine(rect.left + w - xv, y1, rect.right - w + xv, y1, mGuidelinePaint);
-                    canvas.drawLine(rect.left + w - xv, y2, rect.right - w + xv, y2, mGuidelinePaint);
-                }
-
-            } else {
-
-                // Draw vertical guidelines.
-                float x1 = rect.left + oneThirdCropWidth;
-                float x2 = rect.right - oneThirdCropWidth;
+                float thirdWidth = rect.width() / 3;
+                float x1 = rect.left + thirdWidth;
+                float x2 = rect.right - thirdWidth;
                 canvas.drawLine(x1, rect.top, x1, rect.bottom, mGuidelinePaint);
                 canvas.drawLine(x2, rect.top, x2, rect.bottom, mGuidelinePaint);
+            }
 
-                if (horizontalGuidelines == 0) {
-                    //NONE!
-                } else if (horizontalGuidelines == 1) {
-                    //draw line in the middle
-                    float y2 = rect.top + halfHeight;
-                    canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
 
-                } else if (horizontalGuidelines == 2) {
-                    //draw three lines
-                    float y1 = rect.top + oneThirdCropHeight;
-                    float y2 = rect.bottom - oneThirdCropHeight;
-                    canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
-                    canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
-                }
+            if (horizontalGuidelines == 0) {
+                //NONE!
+            } else if (horizontalGuidelines == 1) {
+                float y2 = rect.top + rect.height() / 2;
+                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+            } else if (horizontalGuidelines == 2) {
+
+                float oneThirdCropHeight = rect.height() / 3;
+                float y1 = rect.top + oneThirdCropHeight;
+                float y2 = rect.bottom - oneThirdCropHeight;
+
+                canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
+                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+            } else if (horizontalGuidelines == 3) {
+
+                float quarterHeight = rect.height() / 4;
+                float y1 = rect.top + quarterHeight;
+                float y2 = rect.top + (quarterHeight * 2);
+                float y3 = rect.bottom - quarterHeight;
+
+                canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
+                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+                canvas.drawLine(rect.left, y3, rect.right, y3, mGuidelinePaint);
+            } else if (horizontalGuidelines == 4) {
+
+                float fifthHeight = rect.height() / 5;
+                float y1 = rect.top + fifthHeight;
+                float y2 = rect.top + (fifthHeight * 2);
+                float y3 = rect.top + (fifthHeight * 3);
+                float y4 = rect.bottom - fifthHeight;
+
+                canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
+                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+                canvas.drawLine(rect.left, y3, rect.right, y3, mGuidelinePaint);
+                canvas.drawLine(rect.left, y4, rect.right, y4, mGuidelinePaint);
+            } else if (horizontalGuidelines == 5) {
+                //draw five lines
+                float fifthHeight = rect.height() / 6;
+                float y1 = rect.top + fifthHeight;
+                float y2 = rect.top + (fifthHeight * 2);
+                float y3 = rect.top + (fifthHeight * 3);
+                float y4 = rect.top + (fifthHeight * 4);
+                float y5 = rect.top + (fifthHeight * 5);
+
+                canvas.drawLine(rect.left, y1, rect.right, y1, mGuidelinePaint);
+                canvas.drawLine(rect.left, y2, rect.right, y2, mGuidelinePaint);
+                canvas.drawLine(rect.left, y3, rect.right, y3, mGuidelinePaint);
+                canvas.drawLine(rect.left, y4, rect.right, y4, mGuidelinePaint);
+                canvas.drawLine(rect.left, y5, rect.right, y5, mGuidelinePaint);
             }
         }
     }
+
 
     /**
      * Draw borders of the crop area.
@@ -1110,6 +1137,7 @@ public class CropOverlayView extends View {
             Log.e("AIC", "Exception in crop window changed", e);
         }
     }
+
     // endregion
 
     // region: Inner class: CropWindowChangeListener
@@ -1183,5 +1211,37 @@ public class CropOverlayView extends View {
         verticalGuidelines = 2;
         horizontalGuidelines = 2;
     }
+
+
+    private void prepareForCustomGuidelines() {
+        if (cWidth == 1) {
+            verticalGuidelines = 0;
+        } else if (cWidth == 2) {
+            verticalGuidelines = 1;
+        } else if (cWidth == 3) {
+            verticalGuidelines = 2;
+        }
+
+        if (cHeight == 1) {
+            horizontalGuidelines = 0;
+        } else if (cHeight == 2) {
+            horizontalGuidelines = 1;
+        } else if (cHeight == 3) {
+            horizontalGuidelines = 2;
+        } else if (cHeight == 4) {
+            horizontalGuidelines = 3;
+        } else if (cHeight == 5) {
+            horizontalGuidelines = 4;
+        } else if (cHeight == 6) {
+            horizontalGuidelines = 5;
+        }
+    }
+
+
+    public void setCustomGuidelines(int cWidth, int cHeight) {
+        this.cWidth = cWidth;
+        this.cHeight = cHeight;
+    }
+
     // endregion
 }

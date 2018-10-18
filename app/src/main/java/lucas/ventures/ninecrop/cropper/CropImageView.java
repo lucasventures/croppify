@@ -1927,6 +1927,11 @@ public class CropImageView extends FrameLayout {
         // set the bitmap rectangle and update the crop window after scale factor is set
         mCropOverlayView.setBounds(clear ? null : mImagePoints, getWidth(), getHeight());
     }
+
+    public void prepareCustomGuidelines(int cWidth, int cHeight){
+        mCropOverlayView.setCustomGuidelines(cWidth, cHeight);
+    }
+
     // endregion
 
     // region: Inner class: CropShape
@@ -2009,7 +2014,9 @@ public class CropImageView extends FrameLayout {
          */
         THREE_BY_ONE,
         THREE_BY_TWO,
-        THREE_BY_THREE
+        THREE_BY_THREE,
+        CUSTOM
+
     }
     // endregion
 

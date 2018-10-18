@@ -31,9 +31,8 @@ public class CropEngine {
     /**
      * @param context
      * @param imageUri
-     * @param type     ---- this is an integer declaring the number of "levels" to a column. Currently may be 1, 2, or 3.
      */
-    public static boolean createCroppedImagesWithParams(WeakReference<Context> context, String imageUri, int type) {
+    public static boolean createCroppedImagesWithParams(WeakReference<Context> context, String imageUri, int width, int height) {
         //reset the cache
         croppedImages.clear();
 
@@ -46,8 +45,8 @@ public class CropEngine {
             int rows, cols;
             int chunkHeight, chunkWidth;
 
-            rows = type;
-            cols = 3;
+            rows = height;
+            cols = width;
             chunkHeight = bitmap.getHeight() / rows;
             chunkWidth = bitmap.getWidth() / cols;
 

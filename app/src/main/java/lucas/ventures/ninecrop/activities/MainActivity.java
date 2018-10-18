@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(likeIng);
         } catch (ActivityNotFoundException e) {
             startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://instagram.com/9croppro")));
+                    Uri.parse("http://instagram.com/lucasventures")));
         }
     }
 
@@ -156,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+
             final CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
             if (data == null) {
@@ -163,24 +164,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
-            final int cropType = data.getIntExtra("type", 0);
-            if (resultCode == RESULT_OK && cropType != 0) {
+            final int cWidth = data.getIntExtra("width", 0);
+            final int cHeight = data.getIntExtra("height", 0);
 
-                final Handler handler = new Handler();
+            if (resultCode == RESULT_OK && cWidth != 0 && cHeight != 0) {
 
-                final WeakReference<Context> contextWeakReference = new WeakReference<Context>(this);
-
-                final AlertDialog dialog = new AlertDialog.Builder(contextWeakReference.get())
+                final AlertDialog dialog = new AlertDialog.Builder(this)
                         .setView(R.layout.loading)
                         .setCancelable(false)
                         .create();
                 dialog.show();
 
+                final Handler handler = new Handler();
+
+                final WeakReference<Context> contextWeakReference = new WeakReference<Context>(this);
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         final boolean successful = CropEngine
-                                .createCroppedImagesWithParams(contextWeakReference, result.getUri().toString(), cropType);
+                                .createCroppedImagesWithParams(contextWeakReference, result.getUri().toString(), cWidth, cHeight);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/selections"
+        android:layout_alignParentBottom="true"
         android:paddingBottom="12dp">
-
     </lucas.ventures.ninecrop.cropper.CropImageView>
 
     <com.google.android.gms.ads.AdView
@@ -20,50 +21,58 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
+        android:minHeight="50dp"
         ads:adSize="BANNER"
         ads:adUnitId="@string/admob_test" />
 
-
-    <LinearLayout
-        android:id="@+id/selections"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/adView"
-        android:layout_margin="12dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/threexone"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/selections"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"
-            android:layout_weight="1"
+            android:layout_margin="12dp"
+            android:layout_below="@+id/adView"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal">
 
-            android:background="@drawable/button_bgn"
-            android:text="3x1"
-            android:textColor="#ffffff" />
+            <Button
+                android:id="@+id/threexone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bgn"
+                android:text="3x1"
+                android:textColor="#ffffff" />
 
-        <Button
-            android:id="@+id/threextwo"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/button_bgn"
-            android:text="3x2"
-            android:textColor="#ffffff" />
+            <Button
+                android:id="@+id/threextwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/button_bgn"
+                android:text="3x2"
+                android:textColor="#ffffff" />
 
-        <Button
-            android:id="@+id/threexthree"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_weight="1"
-            android:background="@drawable/button_bgn"
-            android:text="3x3"
-            android:textColor="#ffffff" />
+            <Button
+                android:id="@+id/threexthree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bgn"
+                android:text="3x3"
+                android:textColor="#ffffff" />
 
-    </LinearLayout>
-
+            <Button
+                android:id="@+id/custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_bgn"
+                android:text="custom"
+                android:textColor="#ffffff" />
+        </LinearLayout>
 
 </RelativeLayout>
 

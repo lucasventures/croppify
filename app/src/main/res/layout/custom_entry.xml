@@ -34,7 +34,7 @@
         android:padding="16dp"
         android:orientation="horizontal">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/widthLay"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
@@ -53,7 +53,7 @@
                 android:inputType="number"
                 android:lines="1"
                 android:textColorHint="@color/colorPrimaryLight" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/x"
@@ -64,7 +64,7 @@
             android:text=" x "
             android:textSize="26sp" />
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/heightLay"
             android:layout_width="wrap_content"
             android:layout_height="90dp"
@@ -83,7 +83,7 @@
                 android:inputType="number"
                 android:lines="1"
                 android:textColorHint="@color/colorPrimaryLight" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

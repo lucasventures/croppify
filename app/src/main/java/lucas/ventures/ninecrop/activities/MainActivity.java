@@ -11,8 +11,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -188,7 +188,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             @Override
                             public void run() {
                                 if (successful) {
-                                    final Intent intent = new Intent(MainActivity.this, ResultDisplayActivity.class);
+                                    Intent intent = new Intent(MainActivity.this, ResultDisplayActivity.class);
+                                    intent.putExtra("width", cWidth);
+                                    intent.putExtra("height", cHeight);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(MainActivity.this, "An error has occurred.", Toast.LENGTH_LONG).show();
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e(TAG, "onActivityResult: CROPPING ERROR");
                 Toast.makeText(MainActivity.this, "An error has occurred.", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "An error has occurred. value type 0", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "An error has occurred.", Toast.LENGTH_SHORT).show();

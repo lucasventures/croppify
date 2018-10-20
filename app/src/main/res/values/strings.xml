@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">9Crop Pro</string>
+    <string name="app_name">9CROP</string>
 
     <string name="admob_app_id">ca-app-pub-9693278822721633~2347134696</string>
 
     <string name="admob_ad_unit_id">ca-app-pub-9693278822721633/7108506786</string>
 
-    <string name="admob_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_test">ca-app-pub-9693278822721633/7108506786</string>
 
     <string name="crop_image_activity_title" />
 

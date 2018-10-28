@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="lucas.ventures.ninecrop"
-    android:versionCode="10"
-    android:versionName="2.0">
+    android:versionCode="11"
+    android:versionName="2.1">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -47,6 +47,10 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b3c259f861ed0f1a722b685f788b3efa9a452d07" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
